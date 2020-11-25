@@ -8,13 +8,14 @@
       <title>index</title>
       <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+      
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="css/style.css">
      
    </head>
@@ -34,7 +35,7 @@
                   <i class="fa fa-bars fa-2x"></i>
                </div>
                <div class="logo ml-5 my-2">
-                  <img id="img_logo" src="medias/logo.png" alt="">
+                  <img id="img_logo" src="images/logo.png" alt="">
                </div>
                <div class="menu">
                   <ul>
@@ -74,19 +75,19 @@
 
                   <div class="coll-4">
 
-                     <img class="m-4" src="medias/portrait.jpg" alt="">
+                     <img class="m-4" src="images/portrait.jpg" alt="">
                      <h2 class="text-center">Richard</h2>
 
                   </div>
                   <div class="coll-4">
 
-                     <img class="m-4" src="medias/portrait.jpg" alt="">
+                     <img class="m-4" src="images/portrait.jpg" alt="">
                      <h2 class="text-center">Sébastien</h2>
 
                   </div>
                   <div class="coll-4">
 
-                     <img class="m-4" src="medias/portrait.jpg" alt="">
+                     <img class="m-4" src="images/portrait.jpg" alt="">
                      <h2 class="text-center">Alex</h2>
 
                   </div>
@@ -106,7 +107,7 @@
    </div>
 </div>
 
-<div id="carouselExampleIndicators" class="carousel slide w-75 mx-auto" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide w-50 mx-auto mt-2 mb-5" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -114,13 +115,13 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="medias/carroussel-1.jpg" alt="First slide">
+      <img class="d-block w-100" src="images/carroussel-1.jpg" alt="First slide">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="medias/carroussel-2.jpg" alt="Second slide">
+      <img class="d-block w-100" src="images/carroussel-2.jpg" alt="Second slide">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="medias/carroussel-3.jpg" alt="Third slide">
+      <img class="d-block w-100" src="images/carroussel-3.jpg" alt="Third slide">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -128,8 +129,8 @@
     <span class="sr-only">Previous</span>
   </a>
   <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
+    <span class="carousel-control-next-icon " aria-hidden="true"></span>
+    <span class="sr-only ">Next</span>
   </a>
 </div>
 
