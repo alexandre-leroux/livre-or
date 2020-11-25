@@ -25,34 +25,23 @@
    <body>
 
 
+<!-- header -->
+<div class="wrapper">
 
-      <div class="wrapper">
 
+         <?php 
+            include('includes/header-non-connect.html');
+         ?>
       
-         <header class="lg">
-            <nav>
-               <div class="menu-icon">
-                  <i class="fa fa-bars fa-2x"></i>
-               </div>
-               <div class="logo ml-5 my-2">
-                  <img id="img_logo" src="images/logo.png" alt="">
-               </div>
-               <div class="menu">
-                  <ul>
-                     <li><a href="#">Home</a></li>
-                     <li><a href="#">Se connecter</a></li>
-                     <li><a href="#">S'inscrire</a></li>
-                     <li><a href="#">Livre d'or</a></li>                   
-                  </ul>
-               </div>
-            </nav>
-         </header>
-
+      
+<!-- page accueil -->
          <div class="masthead">
+
             <div class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-10 align-self-end">
-                        <h1 class="text-uppercase text-white font-weight-bold">la tech au service de vos services</h1>
+                    <div class="col-lg-10 align-self-end"> 
+                        <h1 id="nom_societe" class="text-uppercase">ivosserv</h1>
+                        <h2 class="text-uppercase display-3 text-white font-weight-bold">la tech au service de vos services</h1>
                         <hr class="divider my-4" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
@@ -61,7 +50,13 @@
                     </div>
                 </div>
             </div>
+
+
 </div>
+
+
+
+<!-- présentation team -->
 
 <div id="ancre"></div>
 
@@ -94,104 +89,86 @@
             </div>
 
       </div>
+
 </div>
 
 
 
+<!--  carroussel réalisations -->
 <div class="containeur p-5">
-<hr class="divider-2 w-50" />
-   <div class="row">
-      <div class="col">
-         <h1 class="text-uppercase m-5 text-center">nos réalisations</h1>
+
+   <hr class="divider-2 w-50" />
+
+      <div class="row">
+
+         <div class="col">
+            <h1 class="text-uppercase m-5 text-center">nos réalisations</h1>
+         </div>
+
       </div>
-   </div>
+
 </div>
 
 <div id="carouselExampleIndicators" class="carousel slide w-50 mx-auto mt-2 mb-5" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="images/carroussel-1.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="images/carroussel-2.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="images/carroussel-3.jpg" alt="Third slide">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon " aria-hidden="true"></span>
-    <span class="sr-only ">Next</span>
-  </a>
+
+
+
+      <ol class="carousel-indicators">
+
+         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+
+      </ol>
+
+
+      <div class="carousel-inner">
+
+            <div class="carousel-item active">
+               <img class="d-block w-100" src="images/carroussel-1.jpg" alt="First slide">
+            </div>
+
+            <div class="carousel-item">
+               <img class="d-block w-100" src="images/carroussel-2.jpg" alt="Second slide">
+            </div>
+
+            <div class="carousel-item">
+               <img class="d-block w-100" src="images/carroussel-3.jpg" alt="Third slide">
+            </div>
+
+      </div>
+
+
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+         <span class="sr-only">Previous</span>
+      </a>
+
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+         <span class="carousel-control-next-icon " aria-hidden="true"></span>
+         <span class="sr-only ">Next</span>
+      </a>
+
+
+
 </div>
 
 
 
-<footer id="fh5co-footer" class="fh5co-bg" role="contentinfo">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row row-pb-md">
-				<div class="col-md-4 fh5co-widget">
-					<h3>A Little About Stamina.</h3>
-					<p class="text-secondary">Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
-					<p><a class="btn btn-primary" href="#">Become A Member</a></p>
-				</div>
-                
-				<div class="col-md-8 d-flex">
-        
-					<div class="col-md-4 col-sm-4 col-xs-6">
-                   
-						<ul class="fh5co-footer-links">
-							<li><a href="#">Cardio</a></li>
-							<li><a href="#">Body Building</a></li>
-							<li><a href="#">Yoga</a></li>
-							<li><a href="#">Boxing</a></li>
-							<li><a href="#">Running</a></li>
-						</ul>
-					</div>
 
-					<div class="col-md-4 col-sm-4 col-xs-6">
-						<ul class="fh5co-footer-links">
-							<li><a href="#">Boxing</a></li>
-							<li><a href="#">Martial Arts</a></li>
-							<li><a href="#">Karate</a></li>
-							<li><a href="#">Kungfu</a></li>
-							<li><a href="#">Basketball</a></li>
-						</ul>
-					</div>
+<!-- footer -->
+<?php 
+  include('includes/footer.html');
+  ?>
 
-					<div class="col-md-4 col-sm-4 col-xs-6">
-						<ul class="fh5co-footer-links">
-							<li><a href="#">Badminton</a></li>
-							<li><a href="#">Body Building</a></li>
-							<li><a href="#">Teams</a></li>
-							<li><a href="#">Advertise</a></li>
-							<li><a href="#">API</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
-			<div class="row copyright">
-				<div class="col-md-12 text-center">
-					<p>
-						<small class="block text-secondary">&copy; 2020 | All Rights Reserved.</small> 
-						<small class="block text-secondary">Powered by  Alex</small>
-					</p>
-				</div>
-			</div>
+<script type="text/javascript" src="js/script.js"></script>
 
-		</div>
-	</footer>
-      <script type="text/javascript" src="js/script.js"></script>
-   </body>
+
+
+
+
+</body>
+
+
 </html>
