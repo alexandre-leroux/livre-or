@@ -42,37 +42,147 @@
     <div class="row h-100">
         <div class="col-6 mx-auto d-flex align-items-center">
 
-<form class="form-signin-inscription">
-      <div class="text-center mb-4">
+                        <form class="form-signin-inscription" action='inscription.php' method='post'>
 
-        <h1 class="h3 mb-3 font-weight-normal">Créer un compte</h1>
-   
-      </div>
+                            <div class="text-center mb-4">
 
-      <div class="form-label-group-inscription">
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputEmail">Email address</label>
-      </div>
+                                <h1 class="h3 mb-3 font-weight-normal">Créer un compte</h1>
+                        
+                            </div>
 
-      <div class="form-label-group-inscription">
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <label for="inputPassword">Password</label>
-      </div>
+                            <div class="form-label-group-inscription">
+                                <input name='login' type="text" id="inputlogin" class="form-control" placeholder="Login" required autofocus>
+                                <label for="inputlogin">Choisir votre login</label>
+                            </div>
 
-      <div class="form-label-group-inscription">
-        <input type="password" id="confirmPassword" class="form-control" placeholder="Password" required>
-        <label for="confirmPassword">Confirm password</label>
-      </div>
+                            <div class="form-label-group-inscription">
+                                <input name='password' type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                <label for="inputPassword">Password</label>
+                            </div>
 
-    <p class="text-center">test</p>
-    
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    
-    </form>
+                            <div class="form-label-group-inscription">
+                                <input name='confirm_password' type="password" id="confirmPassword" class="form-control" placeholder="Password" required>
+                                <label for="confirmPassword">Confirm password</label>
+                            </div>
+
+                            <p class="text-center">test</p>
+
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
+                            
+                        </form>
 
     </div>
     </div>
 </div>
+
+
+
+
+<?php
+
+    try 
+        {
+            $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        }
+    catch (Exception $e)
+        {
+            die('Erreur : ' . $e->getMessage());
+        }
+            
+
+    @$login = htmlspecialchars($_POST['login']);
+    @$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    
+
+
+    if ( !$_POST == NULL )
+
+            {
+
+                
+                        $req = $bdd->prepare(' SELECT * FROM utilisateurs WHERE login = :login ');//on va chercher dans la bdd si le login existe déjà
+                        $req->execute(array( 'login' => $_POST['login']   ));
+                        $donnees = $req->fetchall();
+
+
+                        if (@$donnees['login'] == $_POST['login'])// on compare le résultat, si c'est le cas on générère un form avec le message " login déjà utilisé " 
+            
+                                {
+                                    $login_deja_pris = 'Login déjà utilisé, veuillez en choisir un autre';
+                                }
+
+
+                        else{
+
+
+
+                                                
+                                    if ( $_POST['login'] != NULL AND  $_POST['password'] != NULL AND  $_POST['confirm_password'] != NULL )
+                                        // si tous les champs sont remplis, on peu passer à la suite
+                                            
+                                            {
+                                    
+                                                if ( @$_POST['confirm_password'] === @$_POST['password'] )
+                                                // on verifie d'abord que les mdp sont bien identiques
+
+                                                                {
+
+                                                                    
+
+                                                                        $req = $bdd->prepare('INSERT INTO utilisateurs(login, password) VALUES(:login, :password)');
+                                                                        $req->execute(array(
+                                                                            'login' => $login,                                                                         
+                                                                            'password' => $password,  ));
+
+                                                                            // header('Location: connexion.php');//redirection
+                                                                        
+                                                                }
+
+                                                else 
+                                                // si mdp non identiques, on génère le formulaire avec un message
+                                                                {
+                                                                    $password_non_identiques = 'Les password ne sot pas identiques';
+                                                                }
+
+                                            }
+
+                                    else {
+
+                                        $champs_manquants = 'veuillez remplir tous les champs';
+
+                                        }
+
+
+                            }
+
+
+            }
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- footer -->
 <?php 
