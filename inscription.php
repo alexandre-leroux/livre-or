@@ -82,32 +82,50 @@
                                             
                                             {
                                     
-                                                if ( @$_POST['confirm_password'] === @$_POST['password'] )
-                                                // on verifie d'abord que les mdp sont bien identiques
 
-                                                                {
 
-                                                                    
 
-                                                                        $req = $bdd->prepare('INSERT INTO utilisateurs(login, password) VALUES(:login, :password)');
-                                                                        $req->execute(array(
-                                                                            'login' => $login,                                                                         
-                                                                            'password' => $password,));
-                                                                        $bdd = null;
+                                                if ( strlen($_POST['password']) >= 8 AND strlen($_POST['password']) <= 15 AND preg_match('#[a-z]#',$_POST['password']) AND  preg_match('#[A-Z]#',$_POST['password']) AND  preg_match('#[,;:!&_"-]#',$_POST['password']) AND  preg_match('#[0-9]#',$_POST['password']) ) 
+                                                    //obligation de caractères spéciaux, lettre min et maj et chiffres
+                                                        {
 
-                                                                            // header('Location: connexion.php');//redirection
-                                                                        
-                                                                }
+                                                                if ( @$_POST['confirm_password'] === @$_POST['password'] )
+                                                                // on verifie d'abord que les mdp sont bien identiques
 
-                                                else 
-                                                // si mdp non identiques, on génère le formulaire avec un message
-                                                                {
-                                                                    $password_non_identiques = 'Les passwords ne sont pas identiques';
-                                                                }
+                                                                                {
 
+                                                                                    
+
+                                                                                        $req = $bdd->prepare('INSERT INTO utilisateurs(login, password) VALUES(:login, :password)');
+                                                                                        $req->execute(array(
+                                                                                            'login' => $login,                                                                         
+                                                                                            'password' => $password,));
+                                                                                        $bdd = null;
+
+                                                                                            // header('Location: connexion.php');//redirection
+                                                                                        
+                                                                                }
+
+                                                                else 
+                                                                // si mdp non identiques, on génère le formulaire avec un message
+                                                                                {
+                                                                                    $password_non_identiques = 'Les passwords ne sont pas identiques';
+                                                                                }
+
+                                                        }
+
+                                                 else  
+                                                 // si mdp ne contient pas tout ce qu'il faut on génère le formulaire avec un message
+                                                        {
+
+                                                            $caractere_mdp = 'le mot de passe doit contenir entre 8 et 15 caractères, minuscules, majuscules, au moins un chiffre et un caractère spécial (,;:!&_"-) ';
+
+                                                        }                               
                                             }
 
-                                    else {
+                                    else
+                                    // si des champs sont vides
+                                        {
 
                                         $champs_manquants = 'veuillez remplir tous les champs';
 
@@ -144,23 +162,25 @@ else
                             </div>
 
                             <div class="form-label-group-inscription">
-                                <input name='login' type="text" id="inputlogin" class="form-control" placeholder="Login" required autofocus>
+                                <input name='login' type="text" id="inputlogin" class="form-control" placeholder="Login"  autofocus>
                                 <label for="inputlogin">Choisir votre login</label>
                             </div>
 
                             <div class="form-label-group-inscription">
-                                <input name='password' type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                <input name='password' type="password" id="inputPassword" class="form-control" placeholder="Password" >
                                 <label for="inputPassword">Password</label>
                             </div>
 
                             <div class="form-label-group-inscription">
-                                <input name='confirm_password' type="password" id="confirmPassword" class="form-control" placeholder="Password" required>
+                                <input name='confirm_password' type="password" id="confirmPassword" class="form-control" placeholder="Password" >
                                 <label for="confirmPassword">Confirm password</label>
                             </div>
 
                             <p class="text-center text-danger"><?php    if (   !@$login_deja_pris == NULL ) { echo $login_deja_pris; } 
                                                                         if (   !@$password_non_identiques == NULL ) { echo $password_non_identiques; }  
-                                                                        if (   !@$champs_manquants == NULL ) { echo $champs_manquants ; } ?></p>
+                                                                        if (   !@$champs_manquants == NULL ) { echo $champs_manquants ; }
+                                                                        if (   !@$caractere_mdp == NULL ) { echo $caractere_mdp ; }
+                                                                        ?></p>
 
                             <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
                             
