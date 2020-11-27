@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="fr">
    <head>
@@ -101,8 +102,10 @@
                                                                                             'login' => $login,                                                                         
                                                                                             'password' => $password,));
                                                                                         $bdd = null;
+                                                                                        $_SESSION['inscription_ok'] = 'Vous avez bien été inscrit sur le site';
 
-                                                                                            // header('Location: connexion.php');//redirection
+                                                                                        header('Location: connexion.php');//redirection
+                                                                                        exit();
                                                                                         
                                                                                 }
 
@@ -176,11 +179,13 @@ else
                                 <label for="confirmPassword">Confirm password</label>
                             </div>
 
-                            <p class="text-center text-danger"><?php    if (   !@$login_deja_pris == NULL ) { echo $login_deja_pris; } 
+                            <p class="text-center text-danger">
+                                                                <?php   if (   !@$login_deja_pris == NULL ) { echo $login_deja_pris; } 
                                                                         if (   !@$password_non_identiques == NULL ) { echo $password_non_identiques; }  
                                                                         if (   !@$champs_manquants == NULL ) { echo $champs_manquants ; }
                                                                         if (   !@$caractere_mdp == NULL ) { echo $caractere_mdp ; }
-                                                                        ?></p>
+                                                                ?>
+                            </p>
 
                             <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
                             

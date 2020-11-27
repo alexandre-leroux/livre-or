@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+<?php session_start() ;?>
+
 <html lang="fr">
    <head>
 
@@ -7,10 +9,7 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>index</title>
       <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
-      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-      
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>      
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -26,17 +25,62 @@
 
 
 <!-- header -->
-<div class="wrapper">
-
-
-         <?php 
-            include('includes/header-non-connect.html');
-         ?>
+<?php include('includes/header-non-connect.html'); ?>
 
 
 <!-- pour garder le fond noir sur le header -->
 <div class="masque_pour_header"></div>
 
+
+<?php
+
+  @$login = htmlspecialchars($_POST['login']);
+  @$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+
+    if ( isset($_POST['submit']) AND !$_POST['login']== NULL AND !$_POST['password']== NULL )//teste si tous les champs sont rempli lors de la validation du formulaire
+
+
+        {
+            //connexion à la bdd
+            try 
+            {
+                $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            }
+            catch (Exception $e)
+            {
+                die('Erreur : ' . $e->getMessage());
+            }
+
+            //requête pour trouver le login dans la bdd
+            $requete = $bdd->prepare('SELECT * FROM utilisateurs WHERE login = :login');
+            $requete->execute(array('login' => $_POST['login']));
+            $données_utilisateur = $requete->fetch();
+            $bdd = NULL;
+
+
+            //si login trouvé, vérification du mdp
+            if (!$données_utilisateur == NULL AND password_verify($_POST['password'], $données_utilisateur['password'])) 
+            
+                {
+                    //si ok, fermeture de la bdd création de la session et redirection sur l'accueil
+                    $_SESSION['login'] = $données_utilisateur['login'];
+                    header('location:index.php');
+                    exit();
+                }
+
+            //sinon message erreur, la variable est echo dans le form
+            else{$mauvais_login_mdp = ' login ou mot de passe incorrect';}
+     
+
+        }
+
+
+    //sinon message erreur, la variable est echo dans le form
+     else    {$champs_manquants = 'Veuillez remplir tous les champs';}
+
+
+?>
 
 
 
@@ -44,24 +88,22 @@
     <div class="row h-100">
         <div class="col-6 mx-auto d-flex align-items-center">
 
-            <form class="form-signin my-auto">
+            <form class="form-signin my-auto" target='connexion.php' method='post'>
+                   <p class='text-center text-primary'><?php  if (isset($_SESSION['inscription_ok'])){echo $_SESSION['inscription_ok'] ; } //pour afficher un message quand l'utilisateur arrive ici depuis la page inscription  ?></p>
+                    <h1 class="h3 mb-3 font-weight-normal text-center">Se connecter</h1>
 
-                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-
-                    <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <label for="inputEmail" class="sr-only">Login</label>
+                    <input type="text" id="login_connect" name="login" class="form-control" placeholder="Login"  autofocus>
 
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" >
 
-                    <div class="checkbox mb-3">
-                        <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                        </label>
-                    </div>
+                    <p class="text-center text-danger"><?php  if(isset($_POST['submit']) AND isset($champs_manquants)) {echo $champs_manquants;}  
+                                                              if(isset($_POST['submit']) AND isset($mauvais_login_mdp)) {echo $mauvais_login_mdp;}    
+                                                                ?></p>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                    <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+                    <button class="btn btn-lg btn-primary btn-block" name='submit' type="submit">Envoyer</button>
+                   
 
             </form>
 
@@ -77,7 +119,7 @@
   ?>
 
 
-<!-- <script type="text/javascript" src="js/script.js"></script> -->
+
 
 
 
