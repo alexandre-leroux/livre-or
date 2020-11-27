@@ -88,7 +88,7 @@
     <div class="row h-100">
         <div class="col-6 mx-auto d-flex align-items-center">
 
-            <form class="form-signin my-auto" target='connexion.php' method='post'>
+            <form class="form-signin my-auto" action='connexion.php' method='post'>
                    <p class='text-center text-primary'><?php  if (isset($_SESSION['inscription_ok'])){echo $_SESSION['inscription_ok'] ; } //pour afficher un message quand l'utilisateur arrive ici depuis la page inscription  ?></p>
                     <h1 class="h3 mb-3 font-weight-normal text-center">Se connecter</h1>
 

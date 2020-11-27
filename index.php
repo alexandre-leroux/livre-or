@@ -34,8 +34,14 @@ $_SESSION['inscription_ok'] = NULL;
 <div class="wrapper">
 
 
-         <?php 
-            include('includes/header-non-connect.html');
+         <?php if ( isset($_SESSION['login']))
+                        {
+                           include('includes/header-connect.php');
+                        }
+               else
+                        {
+                           include('includes/header-non-connect.html');
+                        }
          ?>
       
       
