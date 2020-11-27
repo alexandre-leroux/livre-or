@@ -44,16 +44,79 @@ $_SESSION['inscription_ok'] = NULL;
 <div class="masque_pour_header"></div>
 
 
+<?php
+if ( isset($_POST['submit_commentaire'])  )
+
+                {
+                    if (!$_POST['commentaire'] == NULL ) {
+
+                                try 
+                                    {
+                                        $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                                    }
+                                catch (Exception $e)
+                                    {
+                                        die('Erreur : ' . $e->getMessage());
+                                    }
+
+                                    $commentaire = htmlspecialchars($_POST['commentaire']);
+
+                                    $today = date("Y-m-d H:i:s"); 
+                                    $requete = $bdd->prepare('INSERT INTO commentaires (commentaire, id_utilisateur,date) VALUES (:commentaire, :id_utilisateur, :date) ');
+                                    $requete->execute(array(
+                                        'commentaire'=> $commentaire,
+                                        'id_utilisateur'=>$_SESSION['id'],
+                                        'date'=>$today
+
+                                    ));
+                                    $bdd = NULL;
+                            $commentaire_ajoute = 'Merci pour votre commentaire !';
+                
+                
+                        }
+
+                     else {$commentaire_vide = 'Veuillez saisir votre commentaire ' ;}   
+                }
 
 
 
-<div class="container mx-auto" id='containeur_titre_livreor'>
-    <div class="row h-100 no-gutters mx-auto">
-        <div class="col-6 mx-auto d-flex align-items-center ">
-            <h1 class='text-center text-info'>Bienvenue sur le livre d'or</h1>
+else { }
+
+
+?>
+
+      
+<div class="container" id='div_formulaire_livreor' >
+    <div class="row h-100">
+        <div class="col mx-auto d-flex align-items-center">
+
+
+                    <form class='w-75 mx-auto' action='livre-or.php' method='post'>
+              
+                    
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Ecrivez votre comentaire :</label>
+                            <textarea class="form-control" name='commentaire' id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+
+                        <p class='text-center text-danger'><?php echo @$commentaire_vide; ?></p>
+                        <p class='text-center text-primary'><?php echo @$commentaire_ajoute; ?></p>
+
+                        <button class="btn btn-primary" name='submit_commentaire' type="submit">Envoyer</button>
+
+                    
+
+
+                    </form>
+
+
         </div>
     </div>
 </div>
+
+
+
+
 
 <?php
  try 
@@ -81,7 +144,7 @@ while ( $donnees = $requete->fetch(PDO::FETCH_ASSOC) )
 {?>
 
     <div class="containeur">
-        <div class="row  no-gutters">
+        <div class="row">
         <div class="col-6 mx-auto">
         <table class="table table-bordered">
 
@@ -211,7 +274,7 @@ echo '</pre>';
 
 
 
-
+<script type="text/javascript" src="js/script.js"></script>
 
 
 

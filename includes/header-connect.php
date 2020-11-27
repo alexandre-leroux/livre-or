@@ -1,6 +1,6 @@
 
-<header class="lg">
-    <nav>
+<header class="xl">
+    <nav class="xl">
 
        <div class="menu-icon">
           <i class="fa fa-bars fa-2x"></i>
@@ -11,13 +11,13 @@
         
        </div>
 
-       <div class="menu">
+       <div class="menu table-responsive-xl  ">
 
 
         
   
-          <ul>
-            <li><p class="font-weight-bold text-info "><?php echo 'Bienvenue '.$_SESSION['login'].''?></p></li>
+          <ul class='d-flex flex-nowrap justify-content-end xl'>
+            <li><p class="font-weight-bold text-info text-nowrap "><?php echo 'Bienvenue '.$_SESSION['login'].''?></p></li>
             <li><a href="index.php">Home</a></li>
             <li><a href="profil.php">Modifier son profil</a></li>
             <li><a href="livre-or.php">Livre d'or</a></li>              

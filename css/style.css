@@ -462,3 +462,26 @@ hr.light {
 
   height: 92vh ! important;
 }
+
+
+
+
+/* messsages livre d'or */
+.terme{
+
+  font-weight: 900;
+  color: blue;
+}
+
+.message{
+  height: 25vh ;
+  text-overflow: scroll;
+}
+
+#td_messages{
+  background-color: rgb(231, 231, 231);
+}
+
+#containeur_titre_livreor{
+  height: 25vh ;
+}
