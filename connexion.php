@@ -65,6 +65,7 @@
                 {
                     //si ok, fermeture de la bdd création de la session et redirection sur l'accueil
                     $_SESSION['login'] = $données_utilisateur['login'];
+                    $_SESSION['id'] = $données_utilisateur['id'];
                     header('location:index.php');
                     exit();
                 }

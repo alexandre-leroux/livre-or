@@ -22,12 +22,221 @@
 
    <body>
 
+<?php
+
+@$login = htmlspecialchars($_POST['login']);
+@$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            if ( isset($_POST['submit_login'])  )//modification du login
+
+
+                    {
+                            try 
+                            {
+                                $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                            }
+                            catch (Exception $e)
+                            {
+                                die('Erreur : ' . $e->getMessage());
+                            }
+                            $req = $bdd->prepare(' SELECT * FROM utilisateurs WHERE login = :login ');//on va chercher dans la bdd si le login existe déjà
+                            $req->execute(array( 'login' => $_POST['login']   ));
+                            $donnees = $req->fetch();
+
+                            if (isset($donnees['login']))
+                                    {
+                                        $login_deja_pris = 'Login déjà utilisé, veuillez en choisir un autre';
+                                    }
+                            else { 
+                                
+
+                                $req = $bdd->prepare('UPDATE utilisateurs SET login = :login WHERE id = :id');
+                                $req->execute(array(
+                            
+                                'login' => $_POST['login'],
+                                'id' => $_SESSION['id']
+                                        ));    
+                                        
+                                $_SESSION['login'] = $_POST['login'];
+
+                                $bdd = NULL;
+
+                                $login_modifie = 'Votre changement de login a bien été enregistré';
+                                }
+
+                    }
+
+
+
+
+
+
+
+
+
+
+            if ( isset($_POST['submit_password'])  )//modification du password
+
+
+            {
+                    
+                                 
+                    if (  $_POST['password'] != NULL AND  $_POST['confirm_password'] != NULL )
+                    // si tous les champs sont remplis, on peu passer à la suite
+                        
+
+                        {
+                
+                            if ( @$_POST['confirm_password'] === @$_POST['password'] )
+                            // on verifie d'abord que les mdp sont bien identiques
+
+                                            {
+
+                                                if ( strlen($_POST['password']) >= 8 AND strlen($_POST['password']) <= 15 AND preg_match('#[a-z]#',$_POST['password']) AND  preg_match('#[A-Z]#',$_POST['password']) AND  preg_match('#[,;:!&_"-]#',$_POST['password']) AND  preg_match('#[0-9]#',$_POST['password']) ) 
+                                                    //obligation de caractères spéciaux, lettre min et maj et chiffres
+                                                        {
+                                                            try 
+                                                            {
+                                                                $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                                                            }
+                                                            catch (Exception $e)
+                                                            {
+                                                                die('Erreur : ' . $e->getMessage());
+                                                            }
+                                                                
+
+                                                                                    
+                                                                $password = $_POST['password'];
+                                                                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                                                                $req = $bdd->prepare('UPDATE utilisateurs SET password = :password WHERE id = :id');
+                                                                $req->execute(array(
+                                                                    'password' => $password,                                                                    
+                                                                    'id' => $_SESSION['id']
+                                                                ));    
+                                                            
+                                                                $password_modifie = 'Votre password a bien été modifié';
+
+                                                                $bdd = NULL;
+                                                                                        
+                                                        }
+
+                                                else  
+                                                // si mdp ne contient pas tout ce qu'il faut on génère le formulaire avec un message
+                                                        {
+            
+                                                            $caractere_mdp = 'le mot de passe doit contenir entre 8 et 15 caractères, minuscules, majuscules, au moins un chiffre et un caractère spécial (,;:!&_"-) ';
+            
+                                                        }   
+
+                                            }
+
+                             
+                             else 
+                             // si mdp non identiques, on génère le formulaire avec un message
+                                     {
+                                         $password_non_identiques = 'Les passwords ne sont pas identiques';
+                                     }
+
+
+                        }
+
+                else
+                // si des champs sont vides
+                    {
+
+                    $champs_manquants = 'veuillez remplir tous les champs';
+
+                    }
+            }
+?>
 
 <!-- header -->
    <?php 
-      include('includes/header-non-connect.html');
+      include('includes/header-connect.php');
    ?>
 
+
+<div class="masque_pour_header"></div>
+
+
+
+
+
+
+
+<div class="container" id="div_formulaire_inscrip">
+    <div class="row h-100">
+        <div class="col-6 mx-auto d-flex flex-column justify-content-center align-items-center">
+
+
+
+                                <form class="form-signin-inscription" action='profil.php' method='post'>
+
+                                    <div class="text-center mb-4">
+
+                                        <h1 class="h3 mb-3 font-weight-normal">Modifier votre login</h1>
+
+                                    </div>
+
+                                    <div class="form-label-group-inscription">
+                                        <p>Login actuel : <?php echo $_SESSION['login'];?></p>
+                                    
+                                        <input  type="login" name="login" class="form-control" id="login" placeholder="test" >
+                                    </div>
+
+
+                                    <p class="text-center text-danger">
+                                       <?php   if (   !@$login_deja_pris == NULL ) { echo $login_deja_pris; }//si login déjà pris ?>
+                                    </p>
+
+                                    <p class="text-center text-primary">
+                                        <?php   if (   !@$login_modifie == NULL ) { echo $login_modifie; } //si la modification du login est ok?>
+                                    </p>
+
+                                    <button class="btn btn-lg btn-primary btn-block" name="submit_login" type="submit">Confirmer la modification du login</button>
+
+                                </form>
+
+
+
+
+                        <form class="form-signin-inscription" action='profil.php' method='post'>
+
+                            <div class="text-center mb-4">
+
+                                <h1 class="h3 mb-3 font-weight-normal">Modifier votre password</h1>
+                        
+                            </div>
+
+              
+                            <div class="form-label-group-inscription">
+                                <input name='password' type="password" id="inputPassword" class="form-control" placeholder="Password" >
+                                <label for="inputPassword">Password</label>
+                            </div>
+
+                            <div class="form-label-group-inscription">
+                                <input name='confirm_password' type="password" id="confirmPassword" class="form-control" placeholder="Password" >
+                                <label for="confirmPassword">Confirm password</label>
+                            </div>
+
+                            <p class="text-center text-danger">
+                                                                <?php  
+                                                                        if (   !@$password_non_identiques == NULL ) { echo $password_non_identiques; }  
+                                                                        if (   !@$champs_manquants == NULL ) { echo $champs_manquants ; }
+                                                                        if (   !@$caractere_mdp == NULL ) { echo $caractere_mdp ; }
+                                                                ?>
+                            </p>
+                            <p class="text-center text-primary">
+                                        <?php   if (   !@$password_modifie == NULL ) { echo $password_modifie; } //si la modification du password est ok?>
+                                    </p>
+
+                            <button class="btn btn-lg btn-primary btn-block" name="submit_password" type="submit">Confirmer la modification du password</button>
+                            
+                        </form>
+
+        </div>
+    </div>
+</div>
 
 
 
