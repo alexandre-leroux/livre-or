@@ -20,7 +20,7 @@
             <li><p class="font-weight-bold text-info "><?php echo 'Bienvenue '.$_SESSION['login'].''?></p></li>
             <li><a href="index.php">Home</a></li>
             <li><a href="profil.php">Modifier son profil</a></li>
-            <li><a href="#">Livre d'or</a></li>              
+            <li><a href="livre-or.php">Livre d'or</a></li>              
             <li>
                 <form action="index.php" method='post'>
                      <button type="submit" name='deco' class="btn btn-info">Déconnexion</button>            
