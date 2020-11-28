@@ -8,24 +8,33 @@
 
        <div class="logo ml-5 my-2 d-flex">
           <img id="img_logo" src="images/logo.png" alt="logo">
-        
        </div>
 
-       <div class="menu table-responsive-xl  ">
-
+       <div class="menu   ">
+      
 
         
   
           <ul class='d-flex flex-nowrap justify-content-end xl'>
-            <li><p class="font-weight-bold text-info text-nowrap "><?php echo 'Bienvenue '.$_SESSION['login'].''?></p></li>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="profil.php">Modifier son profil</a></li>
-            <li><a href="livre-or.php">Livre d'or</a></li>              
-            <li>
+
+
+
+
+            
+            <li class='px-4'><a href="index.php">Home</a></li>
+
+            <li class='px-4'><a class='text-nowrap ' href="livre-or.php">Livre d'or</a></li>    
+
+            <li class='px-4'><a  href="profil.php"><p id="lien_modif_profil" class="font-weight-bold text-info text-nowrap "><?php echo 'Bienvenue '.$_SESSION['login'].''?></p></a></li>
+
+            <li class='px-4'>
                 <form action="index.php" method='post'>
                      <button type="submit" name='deco' class="btn btn-info">Déconnexion</button>            
-               </form></li>           
-          </ul>
+               </form>
+            </li>
+
+         </ul>
+
        </div>
        
 

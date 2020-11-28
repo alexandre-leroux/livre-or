@@ -40,6 +40,8 @@ $_SESSION['inscription_ok'] = NULL;
                    include('includes/header-non-connect.html');
                 }
  ?>
+
+
       <!-- pour garder le fond noir sur le header -->
 <div class="masque_pour_header"></div>
 
@@ -50,10 +52,20 @@ $_SESSION['inscription_ok'] = NULL;
 <div class="container mx-auto" id='containeur_titre_livreor'>
     <div class="row h-100 no-gutters mx-auto">
         <div class="col-6 mx-auto d-flex align-items-center ">
-            <h1 class='text-center text-info'>Bienvenue sur le livre d'or</h1>
+            <h1 class='w-100 text-center text-info'>Bienvenue sur le livre d'or</h1>
         </div>
     </div>
 </div>
+
+<?php if ( isset($_SESSION['login']))// pour afficher le lien d'ajout de commentaire si l'utilisateur est connecté
+                {
+                  echo '<div class="container my-5"><div class="row"><div class="col-6 mx-auto d-flex justify-content-center"><a class="text-nowrap mx-5" href="commentaire.php">ECRIRE UN MESSAGE</a></li></div></div></div>';
+                }
+     
+ ?>
+
+
+
 
 <?php
  try 
