@@ -13,8 +13,8 @@ $_SESSION['inscription_ok'] = NULL;
       <title>index</title>
       <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
-      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,7 +30,7 @@ $_SESSION['inscription_ok'] = NULL;
    <body>
 
 
-<!-- header -->
+<!-- header selon si tuilisateur connecté ou non -->
  <?php if ( isset($_SESSION['login']))
                 {
                    include('includes/header-connect.php');
@@ -59,7 +59,7 @@ $_SESSION['inscription_ok'] = NULL;
 
 <?php if ( isset($_SESSION['login']))// pour afficher le lien d'ajout de commentaire si l'utilisateur est connecté
                 {
-                  echo '<div class="container my-5"><div class="row"><div class="col-6 mx-auto d-flex justify-content-center"><a class="text-nowrap mx-5" href="commentaire.php">ECRIRE UN MESSAGE</a></li></div></div></div>';
+                  echo '<div class="container my-5"><div class="row"><div class="col-6 mx-auto d-flex justify-content-center"><a class="text-nowrap mx-5 text-uppercase" href="commentaire.php">écrire un message</a></li></div></div></div>';
                 }
      
  ?>
@@ -80,13 +80,8 @@ catch (Exception $e)
 
 
 
- $requete = $bdd->prepare('SELECT commentaire, date, login FROM commentaires INNER JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id');
- $requete->execute(array());
-// $donnees = $requete->fetch(PDO::FETCH_ASSOC);
-
-// echo $donnees['login'];
-
-
+ $requete = $bdd->prepare('SELECT commentaire, date, login FROM commentaires INNER JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id ORDER BY date DESC');
+ $requete->execute(array());//récupération des message dans la bdd
 
 
 while ( $donnees = $requete->fetch(PDO::FETCH_ASSOC) )
@@ -94,37 +89,37 @@ while ( $donnees = $requete->fetch(PDO::FETCH_ASSOC) )
 
     <div class="containeur">
         <div class="row  no-gutters">
-        <div class="col-6 mx-auto">
-        <table class="table table-bordered">
+            <div class="col-6 mx-auto">
+                <table class="table table-bordered">
 
-        <tbody>
-        <tr>
-            <td id='td_messages'><?php echo 'Message posté par <span class="terme"><strong>'.$donnees['login'].'</strong></span>, le ' . $donnees['date'];?></td>
-            
-        </tr>
-        <tr class='message'>
-            <td ><?php echo $donnees['commentaire']?></td>
-          
-        </tr>
+                    <tbody>
+                            <tr>
+                                <!-- affichage de la date et de l'utilisateur qui a posté le message -->
+                                <td id='td_messages'> <?php echo 'Message posté le '. date('d/m/Y', strtotime( $donnees['date'])). ' par  <span class="terme"><strong>'.$donnees['login'].'</strong></span>' ; ?> </td>
 
-        </table>
+                            </tr>
 
+                            <tr class='message'>
+                                 <!-- affichage du message -->
+                                <td ><?php echo $donnees['commentaire']?></td>
+                            
+                            </tr>
+
+                    </table>
+
+            </div>
         </div>
-        </div></div>
+    </div>
+
 <?php
 }
 ?>
+
+
 <?php
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-
-
 
 $bdd = NULL;
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
+
 ?>
 
 
@@ -147,21 +142,6 @@ echo '</pre>';
 
 
 
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-
-
-
-$bdd = NULL;
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-
-
-
-
-?>
 
 
 
