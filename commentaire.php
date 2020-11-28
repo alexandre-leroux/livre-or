@@ -1,4 +1,5 @@
-<?php session_start() ;
+<?php
+session_start() ;
 $_SESSION['inscription_ok'] = NULL;
 ?>
 
@@ -70,7 +71,7 @@ if ( isset($_POST['submit_commentaire'])  )
 
                                     ));
                                     $bdd = NULL;
-                            $commentaire_ajoute = 'Merci pour votre commentaire !';
+                                    $commentaire_ajoute = 'Merci pour votre commentaire !';
                 
                 
                         }
@@ -91,7 +92,7 @@ else { }
         <div class="col mx-auto d-flex align-items-center">
 
 
-                    <form class='w-75 mx-auto' action='livre-or.php' method='post'>
+                    <form class='w-75 mx-auto' action='commentaire.php' method='post'>
               
                     
                         <div class="form-group">
@@ -116,103 +117,6 @@ else { }
 
 
 
-
-
-<?php
- try 
- {
-     $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
- }
-catch (Exception $e)
- {
-     die('Erreur : ' . $e->getMessage());
- }
-
-
-
-
- $requete = $bdd->prepare('SELECT commentaire, date, login FROM commentaires INNER JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id');
- $requete->execute(array());
-// $donnees = $requete->fetch(PDO::FETCH_ASSOC);
-
-// echo $donnees['login'];
-
-
-
-
-while ( $donnees = $requete->fetch(PDO::FETCH_ASSOC) )
-{?>
-
-    <div class="containeur">
-        <div class="row">
-        <div class="col-6 mx-auto">
-        <table class="table table-bordered">
-
-        <tbody>
-        <tr>
-            <td id='td_messages'><?php echo 'Message posté par <span class="terme"><strong>'.$donnees['login'].'</strong></span>, le ' . $donnees['date'];?></td>
-            
-        </tr>
-        <tr class='message'>
-            <td ><?php echo $donnees['commentaire']?></td>
-          
-        </tr>
-
-        </table>
-
-        </div>
-        </div></div>
-<?php
-}
-?>
-<?php
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-
-
-
-$bdd = NULL;
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-
-
-
-$bdd = NULL;
-echo '<pre>';
-print_r($donnees) ;
-echo '</pre>';
-
-
-
-
-?>
 
 
 
@@ -244,37 +148,6 @@ echo '</pre>';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="js/script.js"></script>
 
 
 
