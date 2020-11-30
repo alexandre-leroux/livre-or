@@ -22,6 +22,11 @@
 
    <body>
 
+<?php 
+   include('fonctions/fonctions.php');
+?>
+
+
 <?php
 
 @$login = htmlspecialchars($_POST['login']);
@@ -36,38 +41,34 @@
                         if ( !$_POST['login'] == NULL )
 
                         {
-                            try 
-                            {
-                                $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-                            }
-                            catch (Exception $e)
-                            {
-                                die('Erreur : ' . $e->getMessage());
-                            }
-                            $req = $bdd->prepare(' SELECT * FROM utilisateurs WHERE login = :login ');//on va chercher dans la bdd si le login existe déjà
-                            $req->execute(array( 'login' => $_POST['login']   ));
-                            $donnees = $req->fetch();
+                                connection_bdd();
+                                $bdd = connection_bdd();
 
-                            if (isset($donnees['login']))
-                                    {
-                                        $login_deja_pris = 'Login déjà utilisé, veuillez en choisir un autre';
-                                    }
-                            else { 
-                                
 
-                                $req = $bdd->prepare('UPDATE utilisateurs SET login = :login WHERE id = :id');
-                                $req->execute(array(
+                                recherche_login_existant($bdd);
+                                $données_utilisateur = recherche_login_existant($bdd);
                             
-                                'login' => $_POST['login'],
-                                'id' => $_SESSION['id']
-                                        ));    
-                                        
-                                $_SESSION['login'] = $_POST['login'];
 
-                                $bdd = NULL;
+                                if (isset($données_utilisateur['login']))
+                                        {
+                                            $login_deja_pris = 'Login déjà utilisé, veuillez en choisir un autre';
+                                        }
+                                else { 
+                                    
 
-                                $login_modifie = 'Votre changement de login a bien été enregistré';
-                                }
+                                    $req = $bdd->prepare('UPDATE utilisateurs SET login = :login WHERE id = :id');
+                                    $req->execute(array(
+                                
+                                    'login' => $_POST['login'],
+                                    'id' => $_SESSION['id']
+                                            ));    
+                                            
+                                    $_SESSION['login'] = $_POST['login'];
+
+                                    $bdd = NULL;
+
+                                    $login_modifie = 'Votre changement de login a bien été enregistré';
+                                    }
                         }
 
 
@@ -109,17 +110,11 @@
                                                 if ( strlen($_POST['password']) >= 8 AND strlen($_POST['password']) <= 15 AND preg_match('#[a-z]#',$_POST['password']) AND  preg_match('#[A-Z]#',$_POST['password']) AND  preg_match('#[,;:!&_"-]#',$_POST['password']) AND  preg_match('#[0-9]#',$_POST['password']) ) 
                                                     //obligation de caractères spéciaux, lettre min et maj et chiffres
                                                         {
-                                                            try 
-                                                            {
-                                                                $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-                                                            }
-                                                            catch (Exception $e)
-                                                            {
-                                                                die('Erreur : ' . $e->getMessage());
-                                                            }
-                                                                
 
-                                                                                    
+
+                                                                connection_bdd();
+                                                                $bdd = connection_bdd();
+                                                                      
                                                                 $password = $_POST['password'];
                                                                 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                                                                 $req = $bdd->prepare('UPDATE utilisateurs SET password = :password WHERE id = :id');
@@ -165,10 +160,9 @@
 ?>
 
 <!-- header -->
-   <?php 
-      include('includes/header-connect.php');
-   ?>
-
+<?php 
+   include('includes/header-connect.php');
+?>
 
 <div class="masque_pour_header"></div>
 

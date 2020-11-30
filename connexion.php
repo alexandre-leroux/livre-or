@@ -25,7 +25,10 @@
 
 
 <!-- header -->
-<?php include('includes/header-non-connect.html'); ?>
+<?php   
+        include('includes/header-non-connect.html');
+        include('fonctions/fonctions.php');
+?>
 
 
 <!-- pour garder le fond noir sur le header -->
@@ -43,19 +46,12 @@
 
         {
             //connexion à la bdd
-            try 
-            {
-                $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-            }
-            catch (Exception $e)
-            {
-                die('Erreur : ' . $e->getMessage());
-            }
+            connection_bdd();
+            $bdd = connection_bdd();
 
             //requête pour trouver le login dans la bdd
-            $requete = $bdd->prepare('SELECT * FROM utilisateurs WHERE login = :login');
-            $requete->execute(array('login' => $_POST['login']));
-            $données_utilisateur = $requete->fetch();
+            recherche_login_existant($bdd);
+            $données_utilisateur = recherche_login_existant($bdd);
             $bdd = NULL;
 
 
@@ -71,7 +67,7 @@
                 }
 
             //sinon message erreur, la variable est echo dans le form
-            else{$mauvais_login_mdp = ' login ou mot de passe incorrect';}
+            else    {$mauvais_login_mdp = ' login ou mot de passe incorrect';}
      
 
         }
@@ -85,6 +81,8 @@
 
 
 
+
+<!-- ---------------------------------------- formulaire de connexion html--------------------------------- -->
 <div class="container" id="div_formulaire_connect">
     <div class="row h-100">
         <div class="col-6 mx-auto d-flex align-items-center">
@@ -117,7 +115,7 @@
 <!-- footer -->
 <?php 
   include('includes/footer.html');
-  ?>
+?>
 
 
 

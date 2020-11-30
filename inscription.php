@@ -30,22 +30,16 @@
 
 
 
-         <?php 
-            include('includes/header-non-connect.html');
-         ?>
+<?php 
+   include('includes/header-non-connect.html');
+   include('fonctions/fonctions.php');
+?>
 
 
 
 <?php
 
-    try 
-        {
-            $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        }
-    catch (Exception $e)
-        {
-            die('Erreur : ' . $e->getMessage());
-        }
+
             
 
     @$login = htmlspecialchars($_POST['login']);
@@ -57,19 +51,28 @@
 
             {
 
+
+
+
+                if ( !$_POST['login'] == NULL)
+
+
+                    {
+
+                        connection_bdd();
+                        $bdd = connection_bdd();
+
+                        // voir si login est déjà pris
+                        recherche_login_existant($bdd);
+                        $données_utilisateur = recherche_login_existant($bdd);
+
                 
-                        $req = $bdd->prepare(' SELECT * FROM utilisateurs WHERE login = :login ');//on va chercher dans la bdd si le login existe déjà
-                        $req->execute(array( 'login' => $_POST['login']   ));
-                        $donnees = $req->fetch();
 
-                        // echo '<pre>';
-                        // print_r($donnees) ;
-                        // echo '</pre>';
-
-                        if (@$donnees['login'] == $_POST['login'])// on compare le résultat, si c'est le cas on générère un form avec le message " login déjà utilisé " 
+                        if (@$données_utilisateur['login'] == $_POST['login'])// on compare le résultat, si c'est le cas on générère un form avec le message " login déjà utilisé " 
             
                                 {
                                     $login_deja_pris = 'Login déjà utilisé, veuillez en choisir un autre';
+                                    $bdd = NULL;
                                 }
 
 
@@ -78,72 +81,75 @@
 
 
                                                 
-                                    if ( $_POST['login'] != NULL AND  $_POST['password'] != NULL AND  $_POST['confirm_password'] != NULL )
-                                        // si tous les champs sont remplis, on peu passer à la suite
-                                            
-                                            {
-                                    
+                                           if ( $_POST['login'] != NULL AND  $_POST['password'] != NULL AND  $_POST['confirm_password'] != NULL )
+                                               // si tous les champs sont remplis, on peu passer à la suite
+                                                   
+                                                   {
+                                           
+       
+       
+       
+                                                       if ( strlen($_POST['password']) >= 8 AND strlen($_POST['password']) <= 15 AND preg_match('#[a-z]#',$_POST['password']) AND  preg_match('#[A-Z]#',$_POST['password']) AND  preg_match('#[,;:!&_"-]#',$_POST['password']) AND  preg_match('#[0-9]#',$_POST['password']) ) 
+                                                           //obligation de caractères spéciaux, lettre min et maj et chiffres
+                                                               {
+       
+                                                                       if ( @$_POST['confirm_password'] === @$_POST['password'] )
+                                                                       // on verifie d'abord que les mdp sont bien identiques
+       
+                                                                                       {
+       
+                                                                                           
+       
+                                                                                               $req = $bdd->prepare('INSERT INTO utilisateurs(login, password) VALUES(:login, :password)');
+                                                                                               $req->execute(array(
+                                                                                                   'login' => $login,                                                                         
+                                                                                                   'password' => $password,));
+                                                                                               $bdd = null;
+                                                                                               $_SESSION['inscription_ok'] = 'Vous avez bien été inscrit sur le site';
+       
+                                                                                               header('Location: connexion.php');//redirection
+                                                                                               exit();
+                                                                                               
+                                                                                       }
+       
+                                                                       else 
+                                                                       // si mdp non identiques, on génère le formulaire avec un message
+                                                                                       {
+                                                                                           $password_non_identiques = 'Les passwords ne sont pas identiques';
+                                                                                           $bdd = NULL;
+                                                                                       }
+       
+                                                               }
+       
+                                                        else  
+                                                        // si mdp ne contient pas tout ce qu'il faut on génère le formulaire avec un message
+                                                               {
+       
+                                                                   $caractere_mdp = 'le mot de passe doit contenir entre 8 et 15 caractères, minuscules, majuscules, au moins un chiffre et un caractère spécial (,;:!&_"-) ';
+                                                                   $bdd = NULL;
+       
+                                                               }                               
+                                                   }
+       
+                                           else
+                                           // si des champs sont vides
+                                               {
+       
+                                               $champs_manquants = 'veuillez remplir tous les champs';
+                                               $bdd = NULL;
+       
+                                               }
+       
+       
+                                   }
+                    }
 
-
-
-                                                if ( strlen($_POST['password']) >= 8 AND strlen($_POST['password']) <= 15 AND preg_match('#[a-z]#',$_POST['password']) AND  preg_match('#[A-Z]#',$_POST['password']) AND  preg_match('#[,;:!&_"-]#',$_POST['password']) AND  preg_match('#[0-9]#',$_POST['password']) ) 
-                                                    //obligation de caractères spéciaux, lettre min et maj et chiffres
-                                                        {
-
-                                                                if ( @$_POST['confirm_password'] === @$_POST['password'] )
-                                                                // on verifie d'abord que les mdp sont bien identiques
-
-                                                                                {
-
-                                                                                    
-
-                                                                                        $req = $bdd->prepare('INSERT INTO utilisateurs(login, password) VALUES(:login, :password)');
-                                                                                        $req->execute(array(
-                                                                                            'login' => $login,                                                                         
-                                                                                            'password' => $password,));
-                                                                                        $bdd = null;
-                                                                                        $_SESSION['inscription_ok'] = 'Vous avez bien été inscrit sur le site';
-
-                                                                                        header('Location: connexion.php');//redirection
-                                                                                        exit();
-                                                                                        
-                                                                                }
-
-                                                                else 
-                                                                // si mdp non identiques, on génère le formulaire avec un message
-                                                                                {
-                                                                                    $password_non_identiques = 'Les passwords ne sont pas identiques';
-                                                                                }
-
-                                                        }
-
-                                                 else  
-                                                 // si mdp ne contient pas tout ce qu'il faut on génère le formulaire avec un message
-                                                        {
-
-                                                            $caractere_mdp = 'le mot de passe doit contenir entre 8 et 15 caractères, minuscules, majuscules, au moins un chiffre et un caractère spécial (,;:!&_"-) ';
-
-                                                        }                               
-                                            }
-
-                                    else
-                                    // si des champs sont vides
-                                        {
-
-                                        $champs_manquants = 'veuillez remplir tous les champs';
-
-                                        }
-
-
-                            }
+                    else {$champs_manquants = 'veuillez remplir tous les champs';}
 
 
             }
 
-else
-{
-    $bdd = null;
-}
+
 
 ?>
 

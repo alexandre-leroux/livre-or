@@ -44,6 +44,7 @@
 <?php
 
 if ( isset($_POST['deco']))
+
     {
       session_unset();
       session_destroy();
