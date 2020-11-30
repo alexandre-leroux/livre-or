@@ -32,7 +32,11 @@ $_SESSION['inscription_ok'] = NULL;
 
 
 <!-- header -->
- <?php if ( isset($_SESSION['login']))
+ <?php
+ 
+        include('fonctions/fonctions.php');
+ 
+        if ( isset($_SESSION['login']))
                 {
                    include('includes/header-connect.php');
                 }
@@ -41,6 +45,8 @@ $_SESSION['inscription_ok'] = NULL;
                    include('includes/header-non-connect.html');
                 }
  ?>
+
+
       <!-- pour garder le fond noir sur le header -->
 <div class="masque_pour_header"></div>
 
@@ -51,14 +57,8 @@ if ( isset($_POST['submit_commentaire'])  )
                 {
                     if (!$_POST['commentaire'] == NULL ) {
 
-                                try 
-                                    {
-                                        $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-                                    }
-                                catch (Exception $e)
-                                    {
-                                        die('Erreur : ' . $e->getMessage());
-                                    }
+                                    connection_bdd();
+                                    $bdd = connection_bdd();
 
                                     $commentaire = htmlspecialchars($_POST['commentaire']);
 
@@ -121,29 +121,10 @@ else { }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- footer -->
 <?php 
   include('includes/footer.html');
   ?>
-
-
-
 
 
 

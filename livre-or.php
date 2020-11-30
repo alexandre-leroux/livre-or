@@ -31,7 +31,11 @@ $_SESSION['inscription_ok'] = NULL;
 
 
 <!-- header selon si tuilisateur connecté ou non -->
- <?php if ( isset($_SESSION['login']))
+ <?php 
+
+        include('fonctions/fonctions.php');
+ 
+        if ( isset($_SESSION['login']))
                 {
                    include('includes/header-connect.php');
                 }
@@ -48,7 +52,7 @@ $_SESSION['inscription_ok'] = NULL;
 
 
 
-
+<!--  titre principal  -->
 <div class="container mx-auto" id='containeur_titre_livreor'>
     <div class="row h-100 no-gutters mx-auto">
         <div class="col-6 mx-auto d-flex align-items-center ">
@@ -68,20 +72,15 @@ $_SESSION['inscription_ok'] = NULL;
 
 
 <?php
- try 
- {
-     $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
- }
-catch (Exception $e)
- {
-     die('Erreur : ' . $e->getMessage());
- }
+
+connection_bdd();
+$bdd = connection_bdd();
 
 
 
-
- $requete = $bdd->prepare('SELECT commentaire, date, login FROM commentaires INNER JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id ORDER BY date DESC');
- $requete->execute(array());//récupération des message dans la bdd
+$requete = $bdd->prepare('SELECT commentaire, date, login FROM commentaires INNER JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id ORDER BY date DESC');
+$requete->execute(array());//récupération des message dans la bdd
+$bdd = NULL;
 
 
 while ( $donnees = $requete->fetch(PDO::FETCH_ASSOC) )
@@ -116,47 +115,6 @@ while ( $donnees = $requete->fetch(PDO::FETCH_ASSOC) )
 ?>
 
 
-<?php
-
-$bdd = NULL;
-
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -165,40 +123,7 @@ $bdd = NULL;
 <!-- footer -->
 <?php 
   include('includes/footer.html');
-  ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+?>
 
 
 

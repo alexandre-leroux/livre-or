@@ -41,16 +41,18 @@
     </nav>
  </header>
 
+
+ 
 <?php
 
-if ( isset($_POST['deco']))
+      if ( isset($_POST['deco']))
 
-    {
-      session_unset();
-      session_destroy();
-      header('location:index.php');
-      exit();
+         {
+            session_unset();
+            session_destroy();
+            header('location:index.php');
+            exit();
 
-    }
+         }
 
-    ?>
+?>
