@@ -27,7 +27,7 @@
 
 
 <!-- header -->
-<div class="wrapper">
+
 
 
          <?php 

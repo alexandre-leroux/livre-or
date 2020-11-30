@@ -5,11 +5,13 @@ html, body {
       scroll-behavior: smooth;
       --input-padding-x: .75rem;
       --input-padding-y: .75rem;
+
 }
 
 body {
       font-family: "Helvetica Neue",sans-serif;
       font-weight: lighter;
+      /* min-height: 100vh ! important; */
 
       
 }

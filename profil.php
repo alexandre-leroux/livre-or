@@ -27,10 +27,15 @@
 @$login = htmlspecialchars($_POST['login']);
 @$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            if ( isset($_POST['submit_login'])  )//modification du login
+            if ( isset($_POST['submit_login']) )//modification du login
 
 
                     {
+
+
+                        if ( !$_POST['login'] == NULL )
+
+                        {
                             try 
                             {
                                 $bdd = new PDO('mysql:host=localhost;dbname=livreor;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -63,11 +68,20 @@
 
                                 $login_modifie = 'Votre changement de login a bien été enregistré';
                                 }
+                        }
+
+
+                        else 
+
+                        {
+                            $input_login_vide = 'Vous n\'avez pas saisi de login' ;
+                        }
+                        
 
                     }
 
 
-
+                
 
 
 
@@ -124,7 +138,7 @@
                                                 // si mdp ne contient pas tout ce qu'il faut on génère le formulaire avec un message
                                                         {
             
-                                                            $caractere_mdp = 'le mot de passe doit contenir entre 8 et 15 caractères, minuscules, majuscules, au moins un chiffre et un caractère spécial (,;:!&_"-) ';
+                                                            $caractere_mdp = 'Le mot de passe doit contenir entre 8 et 15 caractères, minuscules, majuscules, au moins un chiffre et un caractère spécial (,;:!&_"-) ';
             
                                                         }   
 
@@ -164,13 +178,13 @@
 
 
 
-<div class="container" id="div_formulaire_inscrip">
-    <div class="row h-100">
-        <div class="col-6 mx-auto d-flex flex-column justify-content-center align-items-center">
+<div class="container h-100" id="div_formulaire_inscrip">
+    <div class="row h-100 ">
+        <div class="col-6 mx-auto d-flex flex-column justify-content-center align-items-center h-100">
 
 
 
-                                <form class="form-signin-inscription" action='profil.php' method='post'>
+                                <form class="form-signin-inscription h-100" action='profil.php' method='post'>
 
                                     <div class="text-center mb-4">
 
@@ -193,6 +207,10 @@
                                         <?php   if (   !@$login_modifie == NULL ) { echo $login_modifie; } //si la modification du login est ok?>
                                     </p>
 
+                                    <p class="text-center text-danger">
+                                        <?php   if (   !@$input_login_vide == NULL ) { echo $input_login_vide; } //si la modification du login est ok?>
+                                    </p>
+                                   
                                     <button class="btn btn-lg btn-primary btn-block" name="submit_login" type="submit">Confirmer la modification du login</button>
 
                                 </form>
@@ -200,7 +218,7 @@
 
 
 
-                        <form class="form-signin-inscription" action='profil.php' method='post'>
+                        <form class="form-signin-inscription h-100" action='profil.php' method='post'>
 
                             <div class="text-center mb-4">
 
