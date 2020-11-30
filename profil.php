@@ -178,13 +178,13 @@
 
 
 
-<div class="container h-100" id="div_formulaire_inscrip">
+<div class="container h-75" id="div_formulaire_inscrip">
     <div class="row h-100 ">
-        <div class="col-6 mx-auto d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="col-6 h-50 mx-auto my-auto ">
 
 
 
-                                <form class="form-signin-inscription h-100" action='profil.php' method='post'>
+                                <form class="form-signin-inscription  " action='profil.php' method='post'>
 
                                     <div class="text-center mb-4">
 
