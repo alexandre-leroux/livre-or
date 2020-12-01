@@ -172,7 +172,7 @@
 
 
 
-<div class="container h-75" id="div_formulaire_inscrip">
+<div class="container h-75" id="div_formulaire_profil">
     <div class="row h-100 ">
         <div class="col-6 h-50 mx-auto my-auto ">
 
