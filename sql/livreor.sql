@@ -2,10 +2,10 @@
 -- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 30, 2020 at 02:43 PM
--- Server version: 5.7.24
--- PHP Version: 7.4.1
+-- Hôte : localhost:3306
+-- Généré le : lun. 22 mars 2021 à 13:53
+-- Version du serveur :  5.7.24
+-- Version de PHP : 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `livreor`
+-- Base de données : `livreor`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commentaires`
+-- Structure de la table `commentaires`
 --
 
 CREATE TABLE `commentaires` (
@@ -36,7 +36,7 @@ CREATE TABLE `commentaires` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `commentaires`
+-- Déchargement des données de la table `commentaires`
 --
 
 INSERT INTO `commentaires` (`id`, `commentaire`, `id_utilisateur`, `date`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `commentaires` (`id`, `commentaire`, `id_utilisateur`, `date`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilisateurs`
+-- Structure de la table `utilisateurs`
 --
 
 CREATE TABLE `utilisateurs` (
@@ -57,44 +57,48 @@ CREATE TABLE `utilisateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `utilisateurs`
+-- Déchargement des données de la table `utilisateurs`
 --
 
 INSERT INTO `utilisateurs` (`id`, `login`, `password`) VALUES
 (1, 'rafael', '$2y$10$e3MFA/ZNXJzLSZI8ENYJielSkk9Tl3oqwZ4RiW2/tzhNRT9dlBxJW'),
-(2, 'james', '$2y$10$0HcTJQMbOwPc/bLOjj30EOexenI43//npFhWN9H4rf.tzvUFaAPyW');
+(2, 'james', '$2y$10$0HcTJQMbOwPc/bLOjj30EOexenI43//npFhWN9H4rf.tzvUFaAPyW'),
+(3, 'scorfel', '$2y$10$PCHk12gGQotbi/ytvd.m8e4cafejN1PMCI7u6nWy2jx4lS5jrx17m'),
+(4, 'jason', '$2y$10$9d4bPPgX4yq/S4N5M660l.m8r2HptgHqf2FtHKkvUYWLKElA8v/HW'),
+(5, 'kirk', '$2y$10$3oAfe9HYplcX2NDRN9cwzur1NMomslGs3rMxLrXLjlnkvLY2xlTVe'),
+(9, 'jean', '$2y$10$OIxly1bFgHJL3a5EzY8VBOC0xRUd0Dn72U7d51sEBBta8ogMVYakO');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `commentaires`
+-- Index pour la table `commentaires`
 --
 ALTER TABLE `commentaires`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `utilisateurs`
+-- Index pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `commentaires`
+-- AUTO_INCREMENT pour la table `commentaires`
 --
 ALTER TABLE `commentaires`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `utilisateurs`
+-- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
