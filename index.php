@@ -34,7 +34,7 @@ $_SESSION['inscription_ok'] = NULL;
 
 
          <?php 
-
+            var_dump($_SESSION);
                
                if ( isset($_SESSION['login']))
                         {

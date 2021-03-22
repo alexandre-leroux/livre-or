@@ -1,6 +1,4 @@
-
-<?php session_start() ;?>
-
+<?php session_start()?>
 <html lang="fr">
    <head>
 
@@ -22,7 +20,12 @@
 
 
    <body>
+   
+   <?php
+//    si utilisateur pas 
+if (isset($_SESSION['login']) and sset($_SESSION['id'])){header('location:../index.php');}
 
+?>
 
 <!-- header -->
 <?php   
